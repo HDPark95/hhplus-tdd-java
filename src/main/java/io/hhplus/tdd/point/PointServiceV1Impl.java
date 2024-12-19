@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Deprecated
 @RequiredArgsConstructor
 public class PointServiceV1Impl implements PointService{
 
