@@ -47,6 +47,7 @@ public class PointController {
             @RequestBody long amount
     ) {
         log.info("포인트 충전 요청 - 유저 ID: {}, 충전 금액: {}", id, amount);
+        ChargeValidator.validate(amount);
         return pointService.charge(id, amount);
     }
 
@@ -68,6 +69,7 @@ public class PointController {
             @RequestBody long amount
     ) {
         log.info("포인트 사용 요청 - 유저 ID: {}, 사용 금액: {}", id, amount);
+        UseValidator.validate(amount);
         return pointService.use(id, amount);
     }
 }

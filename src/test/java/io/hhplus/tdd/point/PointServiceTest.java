@@ -28,31 +28,6 @@ class PointServiceTest {
     }
 
     @Test
-    public void 충전_포인트가_0보다_작으면_포인트_충전에_실패한다(){
-        //given
-        long userId = 1L;
-        long amount = -1L;
-
-        Mockito.when(userPointTable.selectById(userId)).thenReturn(new UserPoint(userId, 0, System.currentTimeMillis()));
-        Assertions.assertThrows(ChargeAmountTooLowException.class, () -> {
-            pointService.charge(userId, amount);
-        });
-    }
-
-    @Test
-    public void 충전_포인트가_1000000을_초과하면_포인트_충전에_실패한다(){
-        //given
-        long userId = 1L;
-        long amount = 1000001L;
-
-        Mockito.when(userPointTable.selectById(userId)).thenReturn(new UserPoint(userId, 0, System.currentTimeMillis()));
-        //when then
-        Assertions.assertThrows(SingleChargeAmountLimitExceededException.class, () -> {
-            pointService.charge(userId, amount);
-        });
-    }
-
-    @Test
     public void 충전포인트를_더했을때_사용자의_보유_포인트가_10000000을_초과하면_포인트_충전에_실패한다(){
         //given
         long userId = 1L;
@@ -81,32 +56,7 @@ class PointServiceTest {
         Assertions.assertEquals(0L, userPoint.point());
     }
 
-    @Test
-    public void 사용_포인트가_0보다_작거나_같은_경우_실패한다(){
-        //given
-        long userId = 1L;
-        long amount = -1;
-
-        Mockito.when(userPointTable.selectById(userId)).thenReturn(new UserPoint(userId, 1000, System.currentTimeMillis()));
-        //when then
-        Assertions.assertThrows(UseAmountTooLowException.class, () -> {
-            pointService.use(userId, amount);
-        });
-    }
-
-    @Test
-    public void 사용_포인트가_1000000을_초과하는_경우_실패한다(){
-        //given
-        long userId = 1L;
-        long amount = 1000001;
-
-        Mockito.when(userPointTable.selectById(userId)).thenReturn(new UserPoint(userId, 1000, System.currentTimeMillis()));
-        //when then
-        Assertions.assertThrows(SingleUseAmountLimitExceededException.class, () -> {
-            pointService.use(userId, amount);
-        });
-    }
-
+    
     @Test
     public void 사용_포인트를_더했을때_사용자의_보유_포인트가_부족한_경우_실패한다(){
         //given
